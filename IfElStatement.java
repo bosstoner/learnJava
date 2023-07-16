@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ElIfStatement {
+public class IfElStatement {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
