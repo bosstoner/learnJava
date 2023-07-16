@@ -1,3 +1,4 @@
+package actuallyWorks;
 import java.util.Scanner;
 
 public class IfElStatement {
