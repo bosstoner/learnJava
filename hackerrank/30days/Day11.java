@@ -1,45 +1,46 @@
 import java.util.Scanner;
+import java.io.IOException;
 
-public class ConsecutiveOnes {
-    public static void main(String[] args) {
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt(); // Read the input integer
-        
-        // Convert the integer to its binary representation as a string
-        String binaryRepresentation = toBinary(n);
-        // Find the maximum number of consecutive ones in the binary representation
-        int maxConsecutiveOnes = findMaxConsecutiveOnes(binaryRepresentation);
-        
-        // Print the result
-        System.out.println(maxConsecutiveOnes);
-        scanner.close();
-    }
-    
-    // Method to convert an integer to binary representation as a string
-    public static String toBinary(int n) {
-        return Integer.toBinaryString(n);
-    }
-    
-    // Method to find the maximum number of consecutive ones in a binary string
-    public static int findMaxConsecutiveOnes(String binary) {
-        int maxConsecutive = 0; // Initialize the maximum consecutive count
-        int currentConsecutive = 0; // Initialize the current consecutive count
-        
-        // Loop through the binary string
-        for (int i = 0; i < binary.length(); i++) {
-            if (binary.charAt(i) == '1') {
-                // If the current digit is '1', increment the current consecutive count
-                currentConsecutive++;
-                // Update the maximum consecutive count if necessary
-                maxConsecutive = Math.max(maxConsecutive, currentConsecutive);
-            } else {
-                // If the current digit is '0', reset the current consecutive count
-                currentConsecutive = 0;
+
+        int[][] arr = new int[6][6]; // Create a 2D array to store input
+
+        // Read and populate the 2D array 'arr'
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                arr[i][j] = scanner.nextInt();
             }
         }
-        
-        // Return the maximum consecutive count
-        return maxConsecutive;
+
+        int maxSum = findMaxHourglassSum(arr); // Find the max hourglass sum
+        System.out.println(maxSum); // Print the result
+        scanner.close();
+    }
+
+    // Method to calculate the hourglass sum for a specific hourglass
+    public static int calculateHourglassSum(int[][] arr, int row, int col) {
+        int sum = arr[row][col] + arr[row][col + 1] + arr[row][col + 2]
+                + arr[row + 1][col + 1]
+                + arr[row + 2][col] + arr[row + 2][col + 1] + arr[row + 2][col + 2];
+        return sum;
+    }
+
+    // Method to find the maximum hourglass sum in the 2D array
+    public static int findMaxHourglassSum(int[][] arr) {
+        int maxSum = Integer.MIN_VALUE; // Initialize max sum with a very small value
+
+        // Iterate through the 2D array except for the border cells
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                int currentSum = calculateHourglassSum(arr, i, j); // Calculate current hourglass sum
+                maxSum = Math.max(maxSum, currentSum); // Update maxSum if needed
+            }
+        }
+
+        return maxSum; // Return the maximum hourglass sum
     }
 }
 

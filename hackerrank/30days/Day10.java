@@ -1,52 +1,45 @@
-import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
+import java.util.Scanner;
 
-// Create a class named 'Result' for the factorial calculation method
-class Result {
-
-    // Define a recursive method to calculate factorial
-    public static int factorial(int n) {
-        // Base case: if n is 0 or 1, factorial is 1
-        if (n < 2) {
-            return 1;
-        } else {
-            // Recursive case: n! = n * (n-1)!
-            // Recur with a smaller problem (n-1) and multiply by n
-            return n * factorial(n-1);
-        }
+public class ConsecutiveOnes {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt(); // Read the input integer
+        
+        // Convert the integer to its binary representation as a string
+        String binaryRepresentation = toBinary(n);
+        // Find the maximum number of consecutive ones in the binary representation
+        int maxConsecutiveOnes = findMaxConsecutiveOnes(binaryRepresentation);
+        
+        // Print the result
+        System.out.println(maxConsecutiveOnes);
+        scanner.close();
     }
-}
-
-// Create the main class 'Solution' to interact with I/O
-public class Solution {
-    public static void main(String[] args) throws IOException {
-        // Initialize BufferedReader to read input
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        // Initialize BufferedWriter to write output
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
-
-        // Read an integer input, which is the argument for factorial
-        int n = Integer.parseInt(bufferedReader.readLine().trim());
-
-        // Calculate factorial using the recursive method from the 'Result' class
-        int result = Result.factorial(n);
-
-        // Write the calculated result to the output
-        bufferedWriter.write(String.valueOf(result));
-        bufferedWriter.newLine();
-
-        // Close the input and output streams
-        bufferedReader.close();
-        bufferedWriter.close();
+    
+    // Method to convert an integer to binary representation as a string
+    public static String toBinary(int n) {
+        return Integer.toBinaryString(n);
+    }
+    
+    // Method to find the maximum number of consecutive ones in a binary string
+    public static int findMaxConsecutiveOnes(String binary) {
+        int maxConsecutive = 0; // Initialize the maximum consecutive count
+        int currentConsecutive = 0; // Initialize the current consecutive count
+        
+        // Loop through the binary string
+        for (int i = 0; i < binary.length(); i++) {
+            if (binary.charAt(i) == '1') {
+                // If the current digit is '1', increment the current consecutive count
+                currentConsecutive++;
+                // Update the maximum consecutive count if necessary
+                maxConsecutive = Math.max(maxConsecutive, currentConsecutive);
+            } else {
+                // If the current digit is '0', reset the current consecutive count
+                currentConsecutive = 0;
+            }
+        }
+        
+        // Return the maximum consecutive count
+        return maxConsecutive;
     }
 }
 
