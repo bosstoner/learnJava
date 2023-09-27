@@ -21,7 +21,7 @@ class SubArray {
     }
 }
 
-/** clean code approach:
+/* clean code approach:
  * class Solution {
     public int maxSubArray(int[] nums) {
         int maxSum = nums[0];
